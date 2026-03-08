@@ -9,13 +9,22 @@ CREATE TABLE Users (
     user_name     VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE HardwareCategories (
+    category_id   INT IDENTITY PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL UNIQUE,
+    is_official   BIT NOT NULL DEFAULT 0 -- Indicates if this category is from an official source
+)
+
 CREATE TABLE HardwareModels (
     model_id         INT IDENTITY PRIMARY KEY,
-    model_category   VARCHAR(255) NOT NULL,
+    category_id      INT NOT NULL,
     model_brand      NVARCHAR(255) NOT NULL,
     model_name       NVARCHAR(255) NOT NULL,
-    model_specs      NVARCHAR(MAX) NULL,     -- Optional JSON or text field for specifications
-    UNIQUE (model_category, model_brand, model_name)
+    model_specs      NVARCHAR(MAX) NULL,       -- Optional JSON or text field for specifications
+    is_official      BIT NOT NULL DEFAULT 0,   -- Indicates if this model is from an official source
+    created_by       VARCHAR(255) NOT NULL,    -- Email of the user who created this model
+    FOREIGN KEY (category_id) REFERENCES HardwareCategories(category_id),
+    FOREIGN KEY (created_by) REFERENCES Users(user_email)
 )
 
 CREATE TABLE Items (
