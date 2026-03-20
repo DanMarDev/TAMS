@@ -2,17 +2,17 @@ namespace Tams.Api.Models
 {
     public class Item
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int HardwareModelId { get; set; }
-        public string OwnerEmail { get; set; }
-        public User Owner { get; set; }
-        public string? CustomBrand { get; set; }
-        public string? CustomName { get; set; }
-        public string? CustomSpecs { get; set; }
-        public string? PurchaseDate { get; set; }
-        public string? PurchasePrice { get; set; }
-        public string? PurchaseCondition { get; set; }
-        public int? EstimatedValue { get; set; }
+        public int ItemId { get; set; }
+        public int UserId { get; set; }
+        public int CategoryId { get; set; }
+        public int? BrandId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? Model { get; set; }
+        public DateOnly? PurchaseDate { get; set; }
+        public decimal? PurchasePrice { get; set; }
+        public string Condition { get; set; } = ItemConditions.Good;
+        public string? Notes { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

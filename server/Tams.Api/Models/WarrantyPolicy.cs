@@ -2,11 +2,11 @@ namespace Tams.Api.Models
 {
     public class WarrantyPolicy
     {
-        public int WarrantyID { get; set; }
-        public string Brand { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
-        public int DefaultMonths { get; set; }
-        public string Region { get; set; } = string.Empty;
-        public string? Notes { get; set; }
+        public int WarrantyPolicyId { get; set; }
+        public int BrandId { get; set; }
+        public int? CategoryId { get; set; }
+        public int WarrantyTermMonths { get; set; }
+        public string? Source { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

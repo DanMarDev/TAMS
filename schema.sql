@@ -44,7 +44,6 @@ CREATE TABLE Items (
     FOREIGN KEY (hardware_model_id) REFERENCES HardwareModels(model_id)
 );
 
-
 CREATE TABLE WarrantyPolicies (
     warranty_id          INT IDENTITY PRIMARY KEY,
     brand                NVARCHAR(255) NOT NULL,
