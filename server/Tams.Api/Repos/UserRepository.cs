@@ -12,7 +12,7 @@ namespace Tams.Api.Repositories
                 SELECT user_id AS UserId,
                        email AS Email,
                        password_hash AS PasswordHash,
-                       display_name AS DisplayName,
+                       user_name AS UserName,
                        created_at AS CreatedAt
                 FROM Users
                 WHERE user_id = @UserId
@@ -26,7 +26,7 @@ namespace Tams.Api.Repositories
                 SELECT user_id AS UserId,
                        email AS Email,
                        password_hash AS PasswordHash,
-                       display_name AS DisplayName,
+                       user_name AS UserName,
                        created_at AS CreatedAt
                 FROM Users
                 WHERE email = @Email
@@ -37,9 +37,9 @@ namespace Tams.Api.Repositories
         public async Task<int> CreateUserAsync(User user)
         {
             const string sql = """
-                INSERT INTO Users (email, password_hash, display_name)
+                INSERT INTO Users (email, password_hash, user_name)
                 OUTPUT INSERTED.user_id
-                VALUES (@Email, @PasswordHash, @DisplayName)
+                VALUES (@Email, @PasswordHash, @UserName)
                 """;
 
             return await db.ExecuteScalarAsync<int>(sql, user);
@@ -51,7 +51,7 @@ namespace Tams.Api.Repositories
                 UPDATE Users
                 SET email = @Email,
                     password_hash = @PasswordHash,
-                    display_name = @DisplayName
+                    user_name = @UserName
                 WHERE user_id = @UserId
                 """;
             await db.ExecuteAsync(sql, user);

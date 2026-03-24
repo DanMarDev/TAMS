@@ -11,7 +11,7 @@ CREATE TABLE Users (
     user_id         INT IDENTITY PRIMARY KEY,
     email           VARCHAR(255) NOT NULL UNIQUE,
     password_hash   VARCHAR(255) NOT NULL,
-    DisplayName     VARCHAR(255) NOT NULL,
+    user_name       VARCHAR(255) NOT NULL,
     created_at      DATETIME     NOT NULL DEFAULT GETDATE()
 );
 
@@ -65,27 +65,27 @@ CREATE TABLE Categories (
 --   Partial participation in: identifies (Brand — nullable)
 -- ============================================================
 CREATE TABLE Items (
-    item_id          INT IDENTITY PRIMARY KEY,
-    user_id          INT NOT NULL,
-    category_id      INT NOT NULL,
-    brand_id         INT NULL,
-    name             VARCHAR(255) NOT NULL,
-    model            VARCHAR(255) NULL,
-    purchase_date    DATE NULL,
-    purchase_price   DECIMAL(18, 2) NULL,
-    condition        VARCHAR(255) NULL DEFAULT 'Good',
-    notes            VARCHAR(1000) NULL,
-    created_at       DATETIME NOT NULL DEFAULT GETDATE(),
-    updated_at       DATETIME NOT NULL DEFAULT GETDATE(),
+    item_id               INT IDENTITY PRIMARY KEY,
+    user_id               INT NOT NULL,
+    category_id           INT NOT NULL,
+    brand_id              INT NULL,
+    name                  VARCHAR(255) NOT NULL,
+    model                 VARCHAR(255) NULL,
+    purchase_date         DATE NULL,
+    purchase_price        DECIMAL(18, 2) NULL,
+    maybe_sell_threshold  DECIMAL(18, 2) NULL DEFAULT 50.00,  -- User-defined threshold for "maybe sell" alert
+    original_value        DECIMAL(18, 2) NULL,  -- Optional field to store original value for depreciation tracking
+    condition             VARCHAR(255) NULL DEFAULT 'Good',
+    notes                 VARCHAR(1000) NULL,
+    created_at            DATETIME NOT NULL DEFAULT GETDATE(),
+    updated_at            DATETIME NOT NULL DEFAULT GETDATE(),
 
     CONSTRAINT FK_Items_Users
         FOREIGN KEY (user_id) REFERENCES Users(user_id),
     CONSTRAINT FK_Items_Categories
         FOREIGN KEY (category_id) REFERENCES Categories(category_id),
     CONSTRAINT FK_Items_Brands
-        FOREIGN KEY (brand_id) REFERENCES Brands(brand_id),
-    CONSTRAINT CK_Items_Condition 
-        CHECK (condition IN ('New', 'Like New', 'Good', 'Fair', 'Poor'))
+        FOREIGN KEY (brand_id) REFERENCES Brands(brand_id)
 );
 
 -- ============================================================
