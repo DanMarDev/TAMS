@@ -1,0 +1,338 @@
+Marinelli 1
+
+Technology Asset Management System (TAMS)
+Requirements Specification
+Daniel Marinelli
+Dr. Bi
+2 February 2026
+Submitted in partial fulfillment
+of the requirements of
+CMPS 490 – Capstone Project
+
+Marinelli 2
+1. Introduction
+Every year, billions of dollars in perfectly functional technology are discarded not because the
+hardware itself has failed, but because its owners simply may not know what they have. A
+graphics card purchased three years ago might still resell at $150 on the used market. A laptop
+under warranty might still qualify for free repair. But without a way to quickly surface that
+information, the path of least resistance is disposal, and the hardware ends up in a landfill instead
+of someone else’s hands.
+The Technology Asset Management System (TAMS) is a personal web application
+designed to close that information gap. TAMS provides PC builders, frequent upgraders, and
+general technology consumers with a single, centralized place to track the hardware they own,
+monitor ownership timelines and warranty status, and estimate current used-market value
+(automatically, where possible). By converting vague, scattered ownership records into
+actionable intelligence, TAMS aims to shift user behavior away from disposing of what they no
+longer need and toward more sustainable alternatives: reselling, repurposing, or simply making
+better informed upgrade decisions.
+From a strategic standpoint, TAMS aligns with two broader objectives. First, it serves as
+a meaningful capstone project that demonstrates full-stack web development competence.
+Second, it is deliberately built using the same technology stack that I will be using in my first
+professional software engineering role, making it also a way to develop practical, job-relevant
+skill acquisition. The system is scoped to be achievable within a single semester while remaining
+genuinely useful as a standalone application.
+
+Marinelli 3
+2. System Model
+The diagram below describes the high-level relationship between the user, system
+components, and the external environment.
+
+Marinelli 4
+The user interacts exclusively through a web browser, whether on a desktop or mobile device.
+The React single-page application (SPA) running in the browser communicates with ASP.NET
+Core back-end API over HTTPS using JSON-formatted REST requests. The back end handles all
+business logic, e.g. managing inventory records, computing warranty status, triggering alerts,
+and brokering calls to external pricing sources. Persistent data is stored in a SQL Server
+relational database. Pricing data originates from an external marketplace API and is either
+returned live to the front end or cached in the database as a price screenshot. The user never
+interacts with the database or external APIs directly, rather all access is mediated through the
+backend API layer.
+3. Functional Requirements
+The following functional requirements describe all services TAMS will provide to the user.
+These requirements are written from a user-centered perspective.
+3.1 User Account Management
+FR-1: Account Registration. The system shall allow a new user to register for an account by
+providing a unique email address and a password. The system shall validate that the email is
+properly formatted and that the password meets the minimum-security requirement (at least eight
+characters). Upon successful registration, the system shall create a new user record and log the
+user in automatically.
+FR-2: User Login. The system shall allow a registered user to log in using their email address
+and password. The system shall authenticate credentials and, upon successful authentication,
+establish an authenticated session. The system shall display an error message if credentials are
+invalid without revealing whether it was the email or password that was incorrect.
+
+Marinelli 5
+FR-3: User Logout. The system shall allow the user to log out, which shall terminate the current
+session and redirect the user to the login page.
+FR-4: Password Reset. The system shall provide a mechanism for a user who has forgotten
+their password to reset it via a link sent to their registered email address.
+3.2 Inventory Management
+FR-5: Add an item. The system shall allow the user to add a new technology item to their
+personal inventory. The user shall be able to provide the following information for each item:
+item name (required), category (required, e.g. GPU, CPU, RAM, Storage, Laptop, Phone, etc.),
+purchase date or an approximate date (required), purchase price (required, in USD), condition
+(required, i.e. New, Like New, Good, Fair, Poor), and free-text notes (optional). The system shall
+save the item and associate it with the authenticated users account.
+FR-6: View Inventory. The system shall present the user with a list of all items in their
+inventory. Each item in the list shall display: the item name, category, purchase date, purchase
+price, and the current estimated value (if available). The user shall be able to sort the list by
+name, category, purchase date, purchase price, or estimated value. The user shall be able to filter
+the list by category.
+FR-7: Edit an Item. The system shall allow the user to edit any field of an existing inventory
+item. Changes shall be saved and reflected immediately across all views.
+FR-8: Delete an Item. The system shall allow the user to permanently delete an item from their
+inventory. The system shall prompt the user to confirm the deletion before removing the record.
+
+Marinelli 6
+FR-9: View Item Detail. The system shall provide a detail view for each item that presents all
+stored fields, the full ownership timeline, the warranty status, the current estimated value, and
+any associated notes.
+3.3 Warranty Tracking
+FR-10: Add Warranty Information. When creating a new item or editing an item that already
+exists, the user shall be able to enter warranty information. The user may specify a warranty
+length by entering warranty length in number of months or by entering an explicit warranty
+expiration date. The system shall compute and display the warranty expiration from either input
+method.
+FR-11: Display Warranty Status. For each item with warranty information, the system shall
+display one of three statuses: Active (expiration date is in the future), Expiring Soon (expiration
+date is within 30 days), or Expired (expiration date has passed). These statuses shall be visually
+distinct.
+FR-12: Warranty Expiration Alerts. The system shall display in-application alerts to the user
+for any items whose warranties are expiring within the next 30 days. These alerts shall be visible
+on the dashboard and shall persist until the warranty has expired or the user dismisses the alert.
+3.4 Valuation and Pricing
+FR-13: Manual Value Entry. The user shall always be able to manually enter or override the
+estimated current value of an item (in USD). This manual value shall be stored and displayed in
+the absence of an automatically retrieved value.
+
+Marinelli 7
+FR-14: Automated Price Lookup. When automated pricing integration is available, the system
+shall allow the user to request a current used-market price estimate for a specific item. The
+system shall query an external marketplace API using the item name and category as search
+parameters. The system shall return a price estimate derived from recent comparable listings and
+display it on the item’s detail view and on the dashboard.
+FR-15: Price Snapshot History. When an automated price lookup is performed, the system
+shall store the retrieved price and the date/time of the retrieval as a price snapshot associated
+with an item. The user shall be able to view the history of price lookups for any given item,
+allowing them to observe how the used-market value of their item has changed over time.
+FR-16: “Maybe Sell” Indicator. The system shall identify items as potential resale candidates
+and surface them on the dashboard. An item shall be flagged as a resale candidate when its
+current estimated value meets a user-defined threshold (default: $50).
+3.5 Dashboard
+FR-17: Dashboard Summary View. Upon login, the system shall present the user with a
+dashboard that provides an at-a-glance summary of their inventory. The dashboard shall include:
+the total number of items tracked, the total estimated current value of the entire inventory, a list
+of the oldest items (by purchase date), a list of warranties expiring within 30 days, a list of items
+flagged as resell candidates, and any active warranty alerts.
+
+4. User Interface Specification
+
+Marinelli 8
+TAMS will follow a clean, information-dense aesthetic appropriate for a utility focused
+application. Users are coming to TAMS to make decisions, not to be entertained, and the visuals
+should convey that. Typography will favor more readable fonts such as sans-serif. All interactive
+elements will have clearly visible hover and focus states to support keyboard navigation.
+4.1 Responsive Layout
+The application will use a single adaptive layout built within a CSS framework (e.g., Tailwind
+CSS or Bootstrap) that renders appropriately across desktop, tablet, and mobile screen sizes.
+There will be no separate mobile application, the same React SPA shall adapt its layout. On
+desktop, the layout will feature a persistent left-hand navigation sidebar containing links to the
+Dashboard, Inventory, and Settings. The main content area to the right will display the currently
+active view. On mobile, the sidebar will collapse into a burger menu accessible from a top
+navigation bar. Dashboard views and items lists will be condensed. The add/edit item form will
+also be optimized for touch input.
+4.2 Key Screens and Interactions
+Login/Registration Screen: A centered card with fields for email and password. Toggle between
+login and registration modes with a single click. Clean validation error messages displayed
+beneath the relevant field.
+Dashboard Screen: The landing screen after login. Displays summary metrics at the top (total
+items, total estimated value). Below that, a set of cards: “Warranties Expiring Soon,” “Oldest
+Items,” and “Maybe Sell” candidates. Active alerts appear as dismissible banners at the top of
+the page.
+
+Marinelli 9
+Inventory List Screen: A full table or card grid view of all items. Columns include name,
+category, purchase date, time owned, warranty status (color-coded badge), and estimated value.
+Sortable column headers. An “Add Item” button is prominently placed in the top-right.
+Add / Edit Item Form: A structured form with labeled input fields. The purchase date field will
+include a date picker. Condition will be a dropdown selector. The warranty section will provide a
+toggle between “Warranty length (months)” and “Expiration date” input modes. A “Save Item”
+button is placed at the bottom.
+Item Detail Screen: Displays all metadata for a single item in a structured layout. A status
+section shows warranty status with a color-coded badge and days remaining. A pricing section
+displays the current estimated value with a “Refresh Price” button for automated lookup and an
+“Override Value” option for manual entry. A price history section shows a table of past price
+snapshots. Edit and Delete actions are accessible from this view.
+Settings Screen: Allows the user to configure their “Maybe Sell” thresholds (minimum value),
+manage their account information, and reset their password.
+5. Non-Functional Requirements
+5.1 Performance
+NFR-1: All page loads and view transitions within the single-page application shall complete
+within 2 seconds under normal conditions (consistent internet connection, no external API calls
+in progress).
+NFR-2: Read operations against the database shall return results within 500 milliseconds for
+inventories of up to 100 items per user.
+
+Marinelli 10
+NFR-3: Automated pricing lookups from the external API are expected to take up to 5 seconds
+and shall be executed asynchronously. The UI shall display a loading indicator while this
+operation is in progress and shall not block other interactions.
+5.2 Software and Hardware Requirements
+NFR-4: The backend application shall be implemented using ASP.NET Core (.NET 8 or later)
+and written in C#. It shall be deployable on a Windows or Linux server environment.
+NFR-5: The database shall be Microsoft SQL Server, with all queries written in T-SQL. The
+database schema shall use appropriate data types (e.g., DATE for purchase dates or
+DECIMAL(10, 2) for monetary values) to ensure data integrity.
+NFR-6: The front end shall be a React application. It shall be compatible with current versions
+of Chrome, Firefox, Edge, and Safari.
+NFR-7: No specialized hardware is required to run the application. Users only need a standard
+web browser on any device capable of rendering a modern web page.
+5.3 Security
+NFR-8: All communications between the client and server shall be conducted over HTTPS.
+NFR-9: User passwords shall be stored as hashed valued using a standard hashing algorithm
+(e.g., bcrypt). Plain-text passwords shall never be stored.
+NFR-10: The API shall require authentication on all endpoints except registration and login.
+Authentication shall be implemented using JSON Web Tokens (JWT). A user shall only be able
+to read or modify their own inventory data.
+5.4 Data Representation
+
+Marinelli 11
+NFR-11: All monetary values (purchase price, estimated value) shall be stored and displayed in
+US Dollars (USD) to two decimal places.
+NFR-12: Dates shall be stored in ISO 8601 format (YYYY-MM-DD) in the database and
+formatted for US locale (MM/DD/YYYY) in the user interface.
+NFR-13: The external pricing API response data shall be stored in a structured form as a price
+snapshot record. Raw API responses shall not be stored in the database.
+5.5 Code and Documentation Standards
+NFR-14: All C# code shall follow Microsoft’s standard C# coding conventions.
+NFR-15: All API controllers and service-layer classes shall include XML documentation
+comments on public methods describing their purpose, parameters, and return values.
+NFR-16: The database schema shall be managed using a migration-based approach (e.g., Entity
+Framework Core migrations) so that schema changes are version controlled and reproducible.
+5.6 Reliability and Availability
+NFR-17: In the event that the external pricing API is unavailable or returns an error, the system
+shall handle the failure gracefully. The user shall be shown a clear error message and the rest of
+the application shall remain fully functional.
+6. System Evolution
+6.1 Foundational Assumptions
+The current design of TAMS rest on several assumptions that may need to be revisited as the
+project evolves:
+
+Marinelli 12
+The system assumes a single-user model, where each account belongs to one individual
+and all data is private. The data schema and access control logic will be built around this
+assumption. Multi-user features would require significant additions to the authorization layer.
+The system assumes that pricing data is sourced externally from a marketplace API and
+that this API is accessed on-demand rather than through a background synchronization job. If
+pricing data were to be refreshed automatically on a schedule, the back-end architecture would
+need to incorporate a background job system. This is a serious consideration as it would
+automate one of the main goals TAMS aims to accomplish.
+The system assumes that item categories are predefined by the application. If userdefined custom categories become a requirement, the database schema would need significant
+additions.
+6.2 Anticipated Extensions
+The following extensions have been considered and the architecture is designed to accommodate
+them without requiring significant refactoring:
+The most natural evolution of TAMS beyond a personal tool is a lightweight peer-to-peer
+marketplace where users can post items for sale directly within the application. The Items table
+schema can be extended with listing-related fields. A new Listings table and associated API
+endpoints could be added as a separate module without affecting existing inventory.
+TAMS could be extended to alert users when a product in their inventory has been
+recalled or has a known firmware/driver issue. This would require integration with a third-party
+recall database or RSS feed and a matching service that compares recalled product identifiers
+
+Marinelli 13
+against the user’s inventory. The integration with a suitable third-party database or other
+information source leaves the delivery of this feature uncertain.
+While the initial focus is on PC components, the category system is designed to be
+extensible to other consumer technology (phones, cameras, appliances). Adding new categories
+would require no schema changes.
+Automated price refresh could be feasible depending on which marketplace API is
+ultimately integrated. For example, a background job that periodically refreshes price data for all
+items in the system (rather than requiring the user to manually trigger a lookup). Could be added
+using a scheduled task library (e.g., Hangfire for .NET).
+7. Glossary
+API (Application Programming Interface): A defined set of rules and protocols that allows
+one software system to communicate with another. TAMS uses external APIs to retrieve usedmarket pricing data.
+ASP.NET Core: An open-source, cross-platform web development framework developed by
+Microsoft for building web applications and APIs using C#. TAMS uses ASP.NET Core for its
+backend.
+bcrypt: A widely used password-hashing algorithm designed to be computationally expensive in
+order to resist brute-force attacks. TAMS will use bcrypt (or an equivalent) to store passwords
+securely.
+Dashboard: The primary landing screen of TAMS after login, providing an at-a-glance
+summary of the user’s inventory, warranty alerts, and resale candidates.
+
+Marinelli 14
+Entity Framework Core (EF Core): An object-relational mapping (ORM) framework for .NET
+that allows developers to interact with a relational database using C# objects rather than raw
+SQL.
+ISO 8601: An international standard for representing dates and times. Dates in ISO 8601 are
+written as YYYY-MM-DD.
+JSON (JavaScript Object Notation): A human-readable data format commonly used for
+transmitting data between a server and a web client.
+JWT (JSON Web Token): A self-contained token used to securely transmit authentication
+information between a client and a server. TAMS shall use JWTs to authenticate API requests.
+Marketplace API: An external web service that provides access to product listing data from an
+online marketplace (e.g., eBay). TAMS uses a marketplace API to retrieve used-market price
+estimates.
+Migration (Database): A version-controlled script that defines incremental changes to a
+database schema, allowing schema evolution to be tracked and reproduced consistently.
+RapidAPI: A third-party API marketplace that aggregates access to numerous external APIs
+under a single interface. Used as a fallback pricing source in TAMS.
+React: A JavaScript library for building user interfaces. TAMS uses React for its frontend.
+REST (Representational State Transfer): An architectural style for designing networked APIs.
+SPA (Single-Page Application): A web application that loads a single HTML page and
+dynamically updates content in the browser without requiring full page reloads.
+
+Marinelli 15
+SQL Server: A relational database management system developed by Microsoft. TAMS uses
+SQL server for persistent data storage.
+T-SQL (Transact-SQL): Microsoft’s extension of SQL used to query and manipulate data in
+SQL Server databases.
+Tailwind CSS / Bootstrap CSS: CSS utility frameworks that provide pre-built styling classes to
+accelerate responsive web design.
+8. Index
+ASP.NET Core - §2 (System Model), NFR-4
+bcrypt – NFR-9
+Dashboard – FR-12, FR-16, FR-17, §4.2
+Data representation – NFR-11, NFR-12, NFR-13
+Documentation standards – NFR-15
+Entity Framework Core (EF Core) - §2 (System Model), NFR-16
+External API (pricing) - §2 (System Model), FR-14, FR-15, NFR-3, NFR-13, NFR-17
+Functional requirements - §3
+Inventory management - §3.2 (FR-5 through FR-9)
+JWT (JSON Web Token) – NFR-10
+“Maybe Sell” indicator – FR-16, FR-17, §4.2, §6.2
+Performance – NFR-1, NFR-2, NFR-3
+
+Marinelli 16
+Security - §5.3 (NFR-8 through NFR-10)
+Single-page application (SPA) - §2, NFR-1, NFR-6
+User account management - §3.1 (FR-1 through FR-4)
+Valuation and pricing - §3.4 (FR-13 through FR-16)
+
+
+
+UPDATE 1: EF Core is no longer being used in the project, so NFR-16 is no longer relevant. 
+The database schema will be managed through raw SQL scripts instead of migrations. Dapper
+will be used instead of EF Core as a lightweight data access layer, but this does not impact the requirement 
+around schema management. The requirement for version-controlled, reproducible schema changes still stands, 
+but it will be achieved through disciplined use of SQL scripts rather than an ORM migration system.cd
+
+UPDATE 2: Predefined categories and user-defined custom categories are no longer mutually exclusive. The system will include a set of predefined categories, 
+but users will also have the option to create their own custom categories. This change requires a modification to the database schema to allow for 
+user-defined categories, as well as updates to the inventory management UI to support category creation and selection.
+
+UPDATE 3: Purchase date, purchase price, and condition are now optional fields when adding an item to the inventory.
+This change was made to lower the barrier to entry for users who may not have complete information about their items, 
+especially for older purchases.
+
+UPDATE 4: The "Maybe Sell" indicator will now be based on a user-defined threshold while still
+defaulting to $50. This allows users to customize what they consider a resale candidate based on their own 
+preferences and market conditions on a per-item basis. The dashboard will reflect this change by using the user-defined threshold for 
+flagging items as resale candidates.
+
+UPDATE 5: The system now requires a username field in addition to email and password for account registration. 
+This username will be displayed in the UI as the primary identifier for the user, while the email will still 
+be used for login and communication purposes. The database schema has been updated to include a username column 
+in the Users table, and the registration and login processes have been modified to accommodate this change.
