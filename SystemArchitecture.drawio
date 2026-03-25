@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0" version="29.4.0">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
   <diagram name="Page-1" id="EUVMYj_-PgjNhlWakFbR">
-    <mxGraphModel dx="2066" dy="1186" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="980" dy="650" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -58,7 +58,7 @@
         <mxCell id="PlHaShBT0GuwmBYz_K4S-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=bottom;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;direction=east;labelPosition=center;verticalLabelPosition=top;convertToSvg=1;" value="&lt;div align=&quot;left&quot;&gt;PricingService&lt;br&gt;&lt;ul&gt;&lt;li&gt;&lt;div align=&quot;left&quot;&gt;Value estimation&lt;/div&gt;&lt;/li&gt;&lt;li&gt;&lt;div align=&quot;left&quot;&gt;Pricing source selection&amp;nbsp;logic&lt;/div&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="120" width="190" x="529.5" y="780" as="geometry" />
         </mxCell>
-        <mxCell id="PlHaShBT0GuwmBYz_K4S-22" parent="1" style="whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;convertToSvg=1;" value="Data Access Layer (EF Core / ADO.NET / TBD)" vertex="1">
+        <mxCell id="PlHaShBT0GuwmBYz_K4S-22" parent="1" style="whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;convertToSvg=1;" value="Data Access Layer (Dapper)" vertex="1">
           <mxGeometry height="60" width="430" x="210.5" y="790" as="geometry" />
         </mxCell>
         <mxCell id="PlHaShBT0GuwmBYz_K4S-27" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;align=center;verticalAlign=top;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;convertToSvg=1;" value="&lt;div&gt;/dashboard&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Oldest items&lt;/div&gt;&lt;div&gt;Expiring warranties&lt;/div&gt;&lt;div&gt;&quot;Maybe sell&quot; candidates&lt;/div&gt;" vertex="1">
