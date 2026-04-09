@@ -1,6 +1,6 @@
 using Tams.Api.Models;
 
-namespace Tams.Api.Repositories
+namespace Tams.Api.Repos
 {
     public interface IUserRepository
     {

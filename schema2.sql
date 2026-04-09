@@ -25,7 +25,7 @@ CREATE TABLE PasswordResetTokens (
 
     CONSTRAINT FK_PasswordResetTokens_Users
         FOREIGN KEY (user_id) REFERENCES Users(user_id)
-)
+);
 
 -- ============================================================
 -- Brand
@@ -72,9 +72,9 @@ CREATE TABLE Items (
     name                  VARCHAR(255) NOT NULL,
     model                 VARCHAR(255) NULL,
     purchase_date         DATE NULL,
-    purchase_price        DECIMAL(18, 2) NULL,
-    maybe_sell_threshold  DECIMAL(18, 2) NULL DEFAULT 50.00,  -- User-defined threshold for "maybe sell" alert
-    original_value        DECIMAL(18, 2) NULL,  -- Optional field to store original value for depreciation tracking
+    purchase_price        DECIMAL(10, 2) NULL,
+    maybe_sell_threshold  DECIMAL(10, 2) NULL DEFAULT 50.00,  -- User-defined threshold for "maybe sell" alert
+    original_value        DECIMAL(10, 2) NULL,  -- Optional field to store original value for depreciation tracking
     condition             VARCHAR(255) NULL DEFAULT 'Good',
     notes                 VARCHAR(1000) NULL,
     created_at            DATETIME NOT NULL DEFAULT GETDATE(),
@@ -97,7 +97,7 @@ CREATE TABLE Items (
 CREATE TABLE WarrantyPolicies (
     warranty_policy_id     INT IDENTITY PRIMARY KEY,
     brand_id               INT NOT NULL,
-    category_id            INT NULL,
+    category_id            INT NOT NULL,
     warranty_term_months   INT NOT NULL,
     source                 VARCHAR(255) NULL,
     created_at             DATETIME NOT NULL DEFAULT GETDATE(),
@@ -147,10 +147,8 @@ CREATE TABLE Valuations (
 
     CONSTRAINT FK_Valuations_Items
         FOREIGN KEY (item_id) REFERENCES Items(item_id)
-            ON DELETE CASCADE,
-    CONSTRAINT CK_Valuation_Source
-        CHECK (source IN ('manual', 'ebay_api', 'third_party_api'))
-)
+            ON DELETE CASCADE
+);
 
 -- ============================================================
 -- WarrantyAlerts
@@ -160,7 +158,7 @@ CREATE TABLE WarrantyAlerts (
     alert_id         INT IDENTITY PRIMARY KEY,
     user_id          INT NOT NULL,
     item_id          INT NOT NULL,
-    alert_type       VARCHAR(255) NOT NULL DEFAULT 'warranty_expiring_30d',  -- e.g., 'warranty_expiring_30d', 'warranty_expiring_7d', 'warranty_expired'
+    alert_type       VARCHAR(255) NOT NULL DEFAULT 'active', -- "active", "expiring_soon", "expired"
     created_at       DATETIME NOT NULL DEFAULT GETDATE(),
     dismissed_at     DATETIME NULL,
 
@@ -169,7 +167,5 @@ CREATE TABLE WarrantyAlerts (
             ON DELETE CASCADE,
     CONSTRAINT FK_WarrantyAlerts_Items
         FOREIGN KEY (item_id) REFERENCES Items(item_id)
-            ON DELETE CASCADE,
-    CONSTRAINT CK_WarrantyAlerts_Type
-         CHECK (alert_type IN ('warranty_expiring_30d', 'warranty_expiring_7d', 'warranty_expired'))
-)
+            ON DELETE CASCADE
+);

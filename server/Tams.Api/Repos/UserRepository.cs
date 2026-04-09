@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Tams.Api.Models;
 
-namespace Tams.Api.Repositories
+namespace Tams.Api.Repos
 {
     public class UserRepository(IDbConnection db) : IUserRepository
     {
