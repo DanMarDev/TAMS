@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Tams.Api.Repos
 {
-    public class WarrantyRepository(IDbConnection db) : IWarrantyRepository
+    internal class WarrantyRepository(IDbConnection db) : IWarrantyRepository
     {
         public async Task<ItemWarranty?> GetWarrantyByItemIdAsync(int itemId)
         {

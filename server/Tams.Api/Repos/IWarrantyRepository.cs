@@ -2,7 +2,7 @@ using Tams.Api.Models;
 
 namespace Tams.Api.Repos
 {
-    public interface IWarrantyRepository
+    internal interface IWarrantyRepository
     {
         Task<ItemWarranty?> GetWarrantyByItemIdAsync(int itemId);
         Task<IEnumerable<ItemWarranty>> GetExpiringWarrantiesAsync(int userId, int daysAhead);

@@ -4,7 +4,7 @@ using Tams.Api.Models;
 
 namespace Tams.Api.Repos
 {
-    public class ItemRepository(IDbConnection db) : IItemRepository
+    internal class ItemRepository(IDbConnection db) : IItemRepository
     {
         public async Task<Item?> GetItemByIdAsync(int itemId)
         {

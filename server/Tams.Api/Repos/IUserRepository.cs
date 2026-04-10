@@ -2,7 +2,7 @@ using Tams.Api.Models;
 
 namespace Tams.Api.Repos
 {
-    public interface IUserRepository
+    internal interface IUserRepository
     {
         Task<User?> GetUserByIdAsync(int userId);
         Task<User?> GetUserByEmailAsync(string email);

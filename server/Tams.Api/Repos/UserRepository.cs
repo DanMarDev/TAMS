@@ -4,7 +4,7 @@ using Tams.Api.Models;
 
 namespace Tams.Api.Repos
 {
-    public class UserRepository(IDbConnection db) : IUserRepository
+    internal class UserRepository(IDbConnection db) : IUserRepository
     {
         public async Task<User?> GetUserByIdAsync(int userId)
         {

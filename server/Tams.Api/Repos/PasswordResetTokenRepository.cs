@@ -4,7 +4,7 @@ using Tams.Api.Models;
 
 namespace Tams.Api.Repos
 {
-    public class PasswordResetTokenRepository(IDbConnection db) : IPasswordResetTokenRepository
+    internal class PasswordResetTokenRepository(IDbConnection db) : IPasswordResetTokenRepository
     {
         public async Task<int> CreateTokenAsync(PasswordResetToken token)
         {

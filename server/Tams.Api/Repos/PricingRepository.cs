@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Tams.Api.Repos
 {
-    public class PricingRepository(IDbConnection db) : IPricingRepository
+    internal class PricingRepository(IDbConnection db) : IPricingRepository
     {
         public async Task<int> InsertValuationAsync(Valuation valuation)
         {
