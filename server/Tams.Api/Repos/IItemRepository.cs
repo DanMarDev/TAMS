@@ -2,7 +2,7 @@ using Tams.Api.Models;
 
 namespace Tams.Api.Repos
 {
-    public interface IItemRepository
+    internal interface IItemRepository
     {
         Task<Item?> GetItemByIdAsync(int itemId);
         Task<IEnumerable<Item>> GetItemsByUserIdAsync(int userId);

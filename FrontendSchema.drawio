@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
   <diagram name="Page-1" id="BcD19ynnqEsZfj3yUBEL">
-    <mxGraphModel dx="1391" dy="855" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1962" dy="1094" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -159,7 +159,7 @@
         <mxCell id="KlBGVmc2TwcZA3FBEbDa-67" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;warrantyApi.js&lt;/b&gt;" vertex="1">
           <mxGeometry height="130" width="120" x="505" y="990" as="geometry" />
         </mxCell>
-        <mxCell id="KlBGVmc2TwcZA3FBEbDa-68" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;ul&gt;&lt;li&gt;requestEstimate()&lt;/li&gt;&lt;li&gt;fetchHistory()&lt;/li&gt;&lt;li&gt;submitManual()&lt;/li&gt;&lt;li&gt;loading / error state&lt;/li&gt;&lt;/ul&gt;" vertex="1">
+        <mxCell id="KlBGVmc2TwcZA3FBEbDa-68" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;ul&gt;&lt;li&gt;CRUD /warranty endpoints&lt;/li&gt;&lt;li&gt;GET /expiring for dashboard alerts&lt;/li&gt;&lt;/ul&gt;" vertex="1">
           <mxGeometry height="30" width="140" x="480" y="1040" as="geometry" />
         </mxCell>
         <mxCell id="KlBGVmc2TwcZA3FBEbDa-69" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;pricingApi.js&lt;/b&gt;" vertex="1">

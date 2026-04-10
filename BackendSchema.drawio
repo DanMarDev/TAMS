@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
   <diagram id="YjWww2mz0f79ee00Uj6n" name="Page-1">
-    <mxGraphModel dx="1307" dy="2067" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1393" dy="1094" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -43,7 +43,7 @@
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-49" edge="1" parent="1" source="nMh9qQF-QrtyKX5LwYoX-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="nMh9qQF-QrtyKX5LwYoX-40">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nMh9qQF-QrtyKX5LwYoX-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" value="&lt;b&gt;API Service Layer (HTTP Client - fetch / axios)&lt;/b&gt;" vertex="1">
+        <mxCell id="nMh9qQF-QrtyKX5LwYoX-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" value="&lt;b&gt;API Controllers&lt;/b&gt;" vertex="1">
           <mxGeometry height="250" width="695" x="78" y="260" as="geometry" />
         </mxCell>
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-21" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;AuthController&lt;/b&gt;" vertex="1">
@@ -76,7 +76,7 @@
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-68" edge="1" parent="1" source="nMh9qQF-QrtyKX5LwYoX-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="nMh9qQF-QrtyKX5LwYoX-59">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nMh9qQF-QrtyKX5LwYoX-40" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" value="&lt;b&gt;API Service Layer (HTTP Client - fetch / axios)&lt;/b&gt;" vertex="1">
+        <mxCell id="nMh9qQF-QrtyKX5LwYoX-40" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" value="&lt;b&gt;Service/Business Logic Layer&lt;/b&gt;" vertex="1">
           <mxGeometry height="250" width="762" x="44.5" y="570" as="geometry" />
         </mxCell>
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-41" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;AuthService&lt;/b&gt;" vertex="1">
@@ -112,10 +112,10 @@
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-60" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;UserRepository&lt;/b&gt;" vertex="1">
           <mxGeometry height="230" width="167" x="59" y="950" as="geometry" />
         </mxCell>
-        <mxCell id="nMh9qQF-QrtyKX5LwYoX-62" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;InventoryService&lt;/b&gt;" vertex="1">
+        <mxCell id="nMh9qQF-QrtyKX5LwYoX-62" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;InventoryRepository&lt;/b&gt;" vertex="1">
           <mxGeometry height="230" width="167" x="246" y="950" as="geometry" />
         </mxCell>
-        <mxCell id="nMh9qQF-QrtyKX5LwYoX-64" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;WarrantyService&lt;/b&gt;" vertex="1">
+        <mxCell id="nMh9qQF-QrtyKX5LwYoX-64" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;WarrantyRepository&lt;/b&gt;" vertex="1">
           <mxGeometry height="230" width="167" x="436" y="950" as="geometry" />
         </mxCell>
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-84" edge="1" parent="1" source="nMh9qQF-QrtyKX5LwYoX-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1.011;entryY=0.58;entryDx=0;entryDy=0;entryPerimeter=0;" target="nMh9qQF-QrtyKX5LwYoX-80">
@@ -126,7 +126,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="nMh9qQF-QrtyKX5LwYoX-66" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;PricingService&lt;/b&gt;" vertex="1">
+        <mxCell id="nMh9qQF-QrtyKX5LwYoX-66" parent="1" style="whiteSpace=wrap;html=1;verticalAlign=top;align=center;" value="&lt;b&gt;PricingRepository&lt;/b&gt;" vertex="1">
           <mxGeometry height="230" width="167" x="626" y="950" as="geometry" />
         </mxCell>
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-69" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Repository method call" vertex="1">
@@ -135,8 +135,8 @@
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-70" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=top;rounded=0;" value="&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetByEmail()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Create()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;UpdatePassword()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetById()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="190" width="150" x="60" y="980" as="geometry" />
         </mxCell>
-        <mxCell id="nMh9qQF-QrtyKX5LwYoX-71" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetAll(userId)&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetById()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Insert()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Update()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Delete()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetCategories()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;InsertCategory()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;UpdateCategory()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;DeleteCategory()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetBrands()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;InsertBrand()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;DeleteBrand()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="190" width="150" x="254.5" y="980" as="geometry" />
+        <mxCell id="nMh9qQF-QrtyKX5LwYoX-71" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetAll(userId)&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetById()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Insert()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Update()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Delete()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetCategories()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;InsertCategory()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;UpdateCategory()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;DeleteCategory()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetBrands()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;InsertBrand()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;UpdateBrand()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;DeleteBrand()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="230" width="150" x="253" y="960" as="geometry" />
         </mxCell>
         <mxCell id="nMh9qQF-QrtyKX5LwYoX-72" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=top;rounded=0;" value="&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetByItemId()&lt;/span&gt;&lt;/font&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetExpiring()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Upsert()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;GetAlerts()&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="190" width="150" x="438" y="980" as="geometry" />
