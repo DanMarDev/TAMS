@@ -10,6 +10,7 @@ namespace Tams.Api.Models
         public string? Model { get; set; }
         public DateOnly? PurchaseDate { get; set; }
         public decimal? PurchasePrice { get; set; }
+        public decimal? MaybeSellThreshold { get; set; }
         public string Condition { get; set; } = ItemConditions.Good;
         public string? Notes { get; set; }
         public DateTime CreatedAt { get; set; }

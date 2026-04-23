@@ -87,12 +87,10 @@ CREATE TABLE Items (
     CONSTRAINT FK_Items_Brands
         FOREIGN KEY (brand_id) REFERENCES Brands(brand_id)
 );
-
 -- ============================================================
 -- WarrantyPolicy
---   Total participation in: scopes (Brand)
---   Partial participation in: scopes (Category — nullable,
---     allowing brand-wide defaults when CategoryId is NULL)
+--   Total participation in: scopes (Brands, Categories)
+--   (Brand-wide defaults removed; category_id is required)
 -- ============================================================
 CREATE TABLE WarrantyPolicies (
     warranty_policy_id     INT IDENTITY PRIMARY KEY,
