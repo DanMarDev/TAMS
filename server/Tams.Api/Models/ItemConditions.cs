@@ -1,6 +1,6 @@
 namespace Tams.Api.Models
 {
-    public class ItemConditions
+    internal class ItemConditions
     {
         public const string New = "New";
         public const string LikeNew = "Like New";

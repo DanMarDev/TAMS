@@ -1,6 +1,6 @@
 namespace Tams.Api.Models
 {
-    public class WarrantyAlert
+    internal class WarrantyAlert
     {
         public int AlertId { get; set; }
         public int UserId { get; set; }
@@ -10,7 +10,7 @@ namespace Tams.Api.Models
         public DateTime? DismissedAt { get; set; }
     }
 
-    public static class WarrantyAlertTypes
+    internal static class WarrantyAlertTypes
     {
         public const string Expiring30d = "warranty_expiring_30d";
         public const string Expiring7d = "warranty_expiring_7d";

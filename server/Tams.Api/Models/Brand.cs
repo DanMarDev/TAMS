@@ -1,6 +1,6 @@
 namespace Tams.Api.Models
 {
-    public class Brand
+    internal class Brand
     {
         public int BrandId { get; set; }
         public int? UserId { get; set; }

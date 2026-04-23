@@ -1,6 +1,6 @@
 namespace Tams.Api.Models
 {
-    public sealed class PasswordResetToken
+    internal sealed class PasswordResetToken
     {
         public int ResetTokenId { get; set; }
         public int UserId { get; set; }

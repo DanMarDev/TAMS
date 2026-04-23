@@ -1,6 +1,6 @@
 namespace Tams.Api.Models
 {
-    public class Item
+    internal class Item
     {
         public int ItemId { get; set; }
         public int UserId { get; set; }

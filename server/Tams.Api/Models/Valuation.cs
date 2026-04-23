@@ -1,6 +1,6 @@
 namespace Tams.Api.Models
 {
-    public class Valuation
+    internal class Valuation
     {
         public int ValuationId { get; set; }
         public int ItemId { get; set; }
@@ -9,7 +9,7 @@ namespace Tams.Api.Models
         public DateTime RetrievedAt { get; set; }
     }
 
-    public static class ValuationSources
+    internal static class ValuationSources
     {
         public const string Manual = "manual";
         public const string Ebay = "ebay_api";
