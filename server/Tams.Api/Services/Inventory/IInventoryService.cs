@@ -1,6 +1,6 @@
 using Tams.Api.Models;
 
-namespace Tams.Api.Services
+namespace Tams.Api.Services.Inventory
 {
     internal interface IInventoryService
     {

@@ -5,7 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Tams.Api.Repos;
 // Services will be added here as needed
-// using Tams.Api.Services;
+using Tams.Api.Services.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +34,7 @@ builder.Services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepo
 // Services - Uncomment services as they are implemented
 // ==========================================
 // builder.Services.AddScoped<IItemService, ItemService>();
-// builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 // builder.Services.AddScoped<IPricingService, PricingService>();
 // builder.Services.AddScoped<IInventoryService, InventoryService>();
 
@@ -43,7 +43,7 @@ builder.Services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepo
 // Authentication - JWT Bearer
 // ==========================================
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var secretKey = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
+var secretKey = Encoding.UTF8.GetBytes(jwtSettings["Secret"]!);
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
