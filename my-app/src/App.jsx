@@ -1,4 +1,4 @@
-import Header from "./header.tsx";
+import Header from "./header.jsx";
 
 function App() {
     return (
