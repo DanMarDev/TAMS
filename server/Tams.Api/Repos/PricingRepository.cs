@@ -46,5 +46,16 @@ namespace Tams.Api.Repos
                 """;
             return await db.QueryFirstOrDefaultAsync<Valuation>(sql, new { ItemId = itemId });
         }
+
+        public async Task<int> GetAllEstimatedValueForUserAsync(int userId)
+        {
+            const string sql = """
+                SELECT SUM(v.estimated_value) AS TotalEstimatedValue
+                FROM Valuations v
+                JOIN Items i ON v.item_id = i.item_id
+                WHERE i.user_id = @UserId
+                """;
+            return await db.ExecuteScalarAsync<int>(sql, new { UserId = userId });
+        }
     }
 }

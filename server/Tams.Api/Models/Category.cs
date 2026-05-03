@@ -1,6 +1,6 @@
 namespace Tams.Api.Models
 {
-    internal sealed class Category
+    public class Category
     {
         public int CategoryId { get; set; }
         public int? UserId { get; set; }

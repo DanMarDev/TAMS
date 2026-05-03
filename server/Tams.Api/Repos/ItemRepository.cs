@@ -85,13 +85,14 @@ namespace Tams.Api.Repos
             return rowsAffected > 0;
         }
 
-        public async Task DeleteItemAsync(int itemId)
+        public async Task<bool> DeleteItemAsync(int itemId)
         {
             const string sql = """
                 DELETE FROM Items
                 WHERE item_id = @ItemId
                 """;
-            await db.ExecuteAsync(sql, new { ItemId = itemId });
+            int rowsAffected = await db.ExecuteAsync(sql, new { ItemId = itemId });
+            return rowsAffected > 0;
         }
 
         /** 
@@ -121,13 +122,15 @@ namespace Tams.Api.Repos
             return rowsAffected > 0;
         }
 
-        public async Task DeleteBrandAsync(int brandId, int userId)
+        public async Task<bool> DeleteBrandAsync(int brandId, int userId)
         {
             const string sql = """
                 DELETE FROM Brands
                 WHERE brand_id = @BrandId AND user_id = @UserId
                 """;
+            int rowsAffected = 
             await db.ExecuteAsync(sql, new { BrandId = brandId, UserId = userId });
+            return rowsAffected > 0;
         }
 
         public async Task<IEnumerable<Brand>> GetBrandsAsync(int userId)
@@ -183,13 +186,14 @@ namespace Tams.Api.Repos
             return rowsAffected > 0;
         }
 
-        public async Task DeleteCategoryAsync(int categoryId, int userId)
+        public async Task<bool> DeleteCategoryAsync(int categoryId, int userId)
         {
             const string sql = """
                 DELETE FROM Categories
                 WHERE category_id = @CategoryId AND user_id = @UserId
                 """;
-            await db.ExecuteAsync(sql, new { CategoryId = categoryId, UserId = userId });
+            int rowsAffected = await db.ExecuteAsync(sql, new { CategoryId = categoryId, UserId = userId });
+            return rowsAffected > 0;
         }
 
         public async Task<IEnumerable<Category>> GetCategoriesAsync(int userId)

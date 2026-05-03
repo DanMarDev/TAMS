@@ -1,7 +1,12 @@
 namespace Tams.Api.Models
 {
-    internal class Item
+    public class Item
     {
+        /// <summary>
+        /// Note: ItemId is the only property that is not user-generated. It is an identity column
+        /// in the database and is assigned by the system upon item creation. All other properties are 
+        /// expected to be provided by the user when creating or updating an item.
+        /// </summary>
         public int ItemId { get; set; }
         public int UserId { get; set; }
         public int CategoryId { get; set; }
