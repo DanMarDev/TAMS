@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Tams.Api.Repos;
 // Services will be added here as needed
 using Tams.Api.Services.Auth;
+using Tams.Api.Services.Inventory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,10 +34,10 @@ builder.Services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepo
 // ==========================================
 // Services - Uncomment services as they are implemented
 // ==========================================
-// builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 // builder.Services.AddScoped<IPricingService, PricingService>();
-// builder.Services.AddScoped<IInventoryService, InventoryService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+// builder.Services.AddScoped<IWarrantyService, WarrantyService>();
 
 
 // ==========================================

@@ -1,8 +1,9 @@
 namespace Tams.Api.Services.Auth
 {
     /// <summary>
-    /// Service interface for handling user authentication, registration, and password reset functionality. Provides methods for registering new users, 
-    /// authenticating existing users, initiating the forgot password process, and resetting passwords.
+    /// Service interface for handling user authentication, registration, and password reset functionality. 
+    /// Provides methods for registering new users, authenticating existing users, initiating the forgot 
+    /// password process, and resetting passwords.
     /// </summary>
 
     public interface IAuthService
@@ -17,7 +18,8 @@ namespace Tams.Api.Services.Auth
         Task<AuthResponse> RegisterAsync(RegisterRequest request);
 
         /// <summary>
-        /// Authenticates a user with the provided email and password. If successful, returns an AuthResponse containing user details and a JWT token.
+        /// Authenticates a user with the provided email and password. If successful, returns an AuthResponse containing user 
+        /// details and a JWT token.
         /// </summary>
         /// <param name="request">The login request containing email and password.</param>
         /// <returns>AuthResponse with user details and JWT token.</returns>
@@ -25,7 +27,8 @@ namespace Tams.Api.Services.Auth
         Task<AuthResponse> LoginAsync(LoginRequest request);
 
         /// <summary>
-        /// Initiates the forgot password process for a user with the provided email. If the email exists, a password reset token is generated and stored, and an email with reset instructions is sent to the user.
+        /// Initiates the forgot password process for a user with the provided email. If the email exists, a password reset token 
+        /// is generated and stored, and an email with reset instructions is sent to the user.
         /// </summary>
         /// <param name="request">The forgot password request containing the user's email.</param>
         /// <returns>A string representing the password reset token.</returns>
@@ -37,5 +40,8 @@ namespace Tams.Api.Services.Auth
         /// <param name="request">The reset password request containing the token and new password.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         Task ResetPasswordAsync(ResetPasswordRequest request);
+
+        // TODO: Implement LogoutAsync to invalidate JWT tokens or remove refresh tokens as needed for user logout functionality.
+        // Task LogoutAsync(int userId);
     }
 }
