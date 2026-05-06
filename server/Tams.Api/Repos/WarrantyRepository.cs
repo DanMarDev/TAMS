@@ -22,6 +22,23 @@ namespace Tams.Api.Repos
             return await db.QuerySingleOrDefaultAsync<ItemWarranty>(sql, new { ItemId = itemId });
         }
 
+        public async Task<IEnumerable<ItemWarranty>> GetWarrantyByUserId(int userId)
+        {
+            const string sql = """
+                SELECT iw.item_warranty_id AS ItemWarrantyId,
+                       iw.item_id AS ItemId,
+                       iw.warranty_policy_id AS WarrantyPolicyId,
+                       iw.warranty_start_date AS WarrantyStartDate,
+                       iw.warranty_end_date AS WarrantyEndDate,
+                       iw.is_manual_entry AS IsManualEntry,
+                       iw.notes AS Notes
+                FROM ItemWarranties iw
+                JOIN Items i ON iw.item_id = i.item_id
+                WHERE i.user_id = @UserId
+                """;
+            return await db.QueryAsync<ItemWarranty>(sql, new { UserId = userId });
+        }
+
         public async Task<IEnumerable<ItemWarranty>> GetExpiringWarrantiesAsync(int userId, int daysAhead)
         {
             const string sql = """
@@ -94,6 +111,29 @@ namespace Tams.Api.Repos
                 END
                 """;
             return await db.ExecuteScalarAsync<int>(sql, warranty);
+        }
+
+        public async Task<bool> DismissAlertAsync(int alertId, int userId)
+        {
+            const string sql = """
+                UPDATE WarrantyAlerts
+                SET dismissed_at = GETDATE()
+                WHERE alert_id = @AlertId AND user_id = @UserId AND dismissed_at IS NULL
+                """;
+            int rowsAffected = await db.ExecuteAsync(sql, new { AlertId = alertId, UserId = userId });
+            return rowsAffected > 0;
+        }
+
+        public async Task<bool> DeleteWarrantyAsync(int warrantyId, int userId)
+        {
+            const string sql = """
+                DELETE iw
+                FROM ItemWarranties iw
+                JOIN Items i ON iw.item_id = i.item_id
+                WHERE iw.item_warranty_id = @WarrantyId AND i.user_id = @UserId
+                """;
+            int rowsAffected = await db.ExecuteAsync(sql, new { WarrantyId = warrantyId, UserId = userId });
+            return rowsAffected > 0;
         }
     }
 }

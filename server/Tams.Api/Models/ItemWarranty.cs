@@ -1,6 +1,6 @@
 namespace Tams.Api.Models
 {
-    internal class ItemWarranty
+    public class ItemWarranty
     {
         public int ItemWarrantyId { get; set; }
         public int ItemId { get; set; }
