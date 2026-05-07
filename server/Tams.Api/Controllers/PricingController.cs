@@ -15,7 +15,7 @@ public sealed class PricingController(IPricingService pricingService) : AppContr
         try
         {
             var valuation = await pricingService.GenerateAutomatedEstimateAsync(itemId, GetUserIdFromClaims());
-            return CreatedAtAction(nameof(GetLatestValuationAsync), new { itemId }, valuation);
+            return CreatedAtAction("GetLatestValuation", new { itemId }, valuation);
         }
         catch (Exception ex)
         {
@@ -61,7 +61,7 @@ public sealed class PricingController(IPricingService pricingService) : AppContr
         try
         {
             var valuation = await pricingService.SubmitManualValuationAsync(itemId, request.Value, GetUserIdFromClaims());
-            return CreatedAtAction(nameof(GetLatestValuationAsync), new { itemId }, valuation);
+            return CreatedAtAction("GetLatestValuation", new { itemId }, valuation);
         }
         catch (Exception ex)
         {

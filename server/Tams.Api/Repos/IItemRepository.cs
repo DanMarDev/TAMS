@@ -2,10 +2,28 @@ using Tams.Api.Models;
 
 namespace Tams.Api.Repos
 {
+    public class ItemWithLatestValuation
+    {
+        public int ItemId { get; set; }
+        public int UserId { get; set; }
+        public int CategoryId { get; set; }
+        public int? BrandId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? Model { get; set; }
+        public DateOnly? PurchaseDate { get; set; }
+        public decimal? PurchasePrice { get; set; }
+        public decimal MaybeSellThreshold { get; set; }
+        public decimal? OriginalValue { get; set; }
+        public string? Condition { get; set; }
+        public decimal? LatestEstimatedValue { get; set; }
+        public DateTime? LatestValuationAt { get; set; }
+    }
+
     internal interface IItemRepository
     {
         Task<Item?> GetItemByIdAsync(int itemId);
         Task<IEnumerable<Item>> GetItemsByUserIdAsync(int userId);
+        Task<IEnumerable<ItemWithLatestValuation>> GetItemsWithLatestValuationAsync(int userId);
         Task<Item?> GetItemAsync(int itemId, int userId);
         Task<int> CreateItemAsync(Item item);
         Task<bool> UpdateItemAsync(Item item);

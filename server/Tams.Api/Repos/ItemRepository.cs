@@ -52,6 +52,34 @@ namespace Tams.Api.Repos
             return await db.QueryAsync<Item>(sql, new { UserId = userId });
         }
 
+        public async Task<IEnumerable<ItemWithLatestValuation>> GetItemsWithLatestValuationAsync(int userId)
+        {
+            const string sql = """
+                SELECT i.item_id              AS ItemId,
+                       i.user_id              AS UserId,
+                       i.category_id          AS CategoryId,
+                       i.brand_id             AS BrandId,
+                       i.name                 AS Name,
+                       i.model                AS Model,
+                       i.purchase_date        AS PurchaseDate,
+                       i.purchase_price       AS PurchasePrice,
+                       i.maybe_sell_threshold AS MaybeSellThreshold,
+                       i.original_value       AS OriginalValue,
+                       i.condition            AS Condition,
+                       v.estimated_value      AS LatestEstimatedValue,
+                       v.retrieved_at         AS LatestValuationAt
+                FROM Items i
+                OUTER APPLY (
+                    SELECT TOP 1 v2.estimated_value, v2.retrieved_at
+                    FROM Valuations v2
+                    WHERE v2.item_id = i.item_id
+                    ORDER BY v2.retrieved_at DESC
+                ) v
+                WHERE i.user_id = @UserId
+                """;
+            return await db.QueryAsync<ItemWithLatestValuation>(sql, new { UserId = userId });
+        }
+
         public async Task<Item?> GetItemAsync(int itemId, int userId)
         {
             const string sql = """

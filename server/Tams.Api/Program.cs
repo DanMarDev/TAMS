@@ -1,14 +1,19 @@
 using System.Data;
 using System.Text;
+using Dapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
+using Tams.Api.Infrastructure;
 using Tams.Api.Repos;
 // Services will be added here as needed
 using Tams.Api.Services.Auth;
 using Tams.Api.Services.Pricing;
 using Tams.Api.Services.Inventory;
 using Tams.Api.Services.Warranty;
+
+SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
+SqlMapper.AddTypeHandler(new NullableDateOnlyTypeHandler());
 
 var builder = WebApplication.CreateBuilder(args);
 

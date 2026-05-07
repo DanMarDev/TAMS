@@ -55,6 +55,12 @@ namespace Tams.Api.Services.Inventory
 
         // ============ Dashboard Analytics ==============
         Task<int> GetTotalItemCountAsync(int userId);
+
+        /// <summary>
+        /// Aggregates dashboard data for the user: summary counts/totals, the five oldest items
+        /// by purchase date, and items flagged as resale candidates ("Maybe Sell").
+        /// </summary>
+        Task<DashboardResponse> GetDashboardAsync(int userId);
         // Task<decimal> GetTotalEstimatedValueAsync(int userId);
         // TODO: Move to PricingService
 

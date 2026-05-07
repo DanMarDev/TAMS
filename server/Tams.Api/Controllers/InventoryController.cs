@@ -18,6 +18,22 @@ namespace Tams.Api.Controllers;
 [Authorize]
 public sealed class InventoryController(IInventoryService inventoryService) : AppControllerBase
 {
+    // ====== Dashboard ======
+
+    [HttpGet("dashboard")]
+    public async Task<IActionResult> GetDashboard()
+    {
+        try
+        {
+            var dashboard = await inventoryService.GetDashboardAsync(GetUserIdFromClaims());
+            return Ok(dashboard);
+        }
+        catch (Exception ex)
+        {
+            return HandleException(ex);
+        }
+    }
+
     // ====== Item CRUD ======
 
     [HttpGet]
