@@ -165,7 +165,6 @@ namespace Tams.Api.Repos
         {
             const string sql = """
                 UPDATE Brands
-                OUTPUT UPDATED.brand_id
                 SET name = @Name
                 WHERE brand_id = @BrandId AND user_id = @UserId
                 """;
@@ -187,8 +186,9 @@ namespace Tams.Api.Repos
         public async Task<IEnumerable<Brand>> GetBrandsAsync(int userId)
         {
             const string sql = """
-                SELECT brand_id AS BrandID,
-                        name as Name,
+                SELECT brand_id AS BrandId,
+                        user_id  AS UserId,
+                        name     AS Name,
                         is_official AS IsOfficial
                 FROM Brands
                 WHERE user_id = @UserId OR is_official = 1
@@ -200,8 +200,9 @@ namespace Tams.Api.Repos
         public async Task<Brand?> GetBrandByIdAsync(int brandId, int userId)
         {
             const string sql = """
-                SELECT brand_id AS BrandID,
-                        name as Name,
+                SELECT brand_id AS BrandId,
+                        user_id  AS UserId,
+                        name     AS Name,
                         is_official AS IsOfficial
                 FROM Brands
                 WHERE (user_id = @UserId OR is_official = 1) AND brand_id = @BrandId
@@ -229,8 +230,8 @@ namespace Tams.Api.Repos
         {
             const string sql = """
                 UPDATE Categories
-                OUTPUT UPDATED.category_id
-                SET name = @Name
+                SET name = @Name,
+                    description = @Description
                 WHERE category_id = @CategoryId AND user_id = @UserId
                 """;
             int rowsAffected = await db.ExecuteAsync(sql, category);
@@ -251,7 +252,9 @@ namespace Tams.Api.Repos
         {
             const string sql = """
                 SELECT category_id AS CategoryId,
-                        name as Name,
+                        user_id    AS UserId,
+                        name       AS Name,
+                        description AS Description,
                         is_official AS IsOfficial
                 FROM Categories
                 WHERE user_id = @UserId OR is_official = 1
@@ -264,7 +267,9 @@ namespace Tams.Api.Repos
         {
             const string sql = """
                 SELECT category_id AS CategoryId,
-                        name as Name,
+                        user_id    AS UserId,
+                        name       AS Name,
+                        description AS Description,
                         is_official AS IsOfficial
                 FROM Categories
                 WHERE (user_id = @UserId OR is_official = 1) AND category_id = @CategoryId

@@ -4,7 +4,8 @@ using Tams.Api.Repos;
 namespace Tams.Api.Services.Inventory
 {
     internal class InventoryService(
-        IItemRepository itemRepo
+        IItemRepository itemRepo,
+        IWarrantyRepository warrantyRepo
     ) : IInventoryService
     {
         // =========== Item CRUD ============
@@ -64,6 +65,16 @@ namespace Tams.Api.Services.Inventory
 
         public async Task<int> CreateBrandAsync(Brand brand)
         {
+            if (string.IsNullOrWhiteSpace(brand.Name))
+                throw new ArgumentException("Brand name is required.");
+
+            brand.Name = brand.Name.Trim();
+
+            var existing = (await itemRepo.GetBrandsAsync(brand.UserId ?? 0))
+                .FirstOrDefault(b => string.Equals(b.Name, brand.Name, StringComparison.OrdinalIgnoreCase));
+            if (existing is not null)
+                return existing.BrandId;
+
             return await itemRepo.CreateBrandAsync(brand);
         }
 
@@ -104,6 +115,16 @@ namespace Tams.Api.Services.Inventory
 
         public async Task<int> CreateCategoryAsync(Category category)
         {
+            if (string.IsNullOrWhiteSpace(category.Name))
+                throw new ArgumentException("Category name is required.");
+
+            category.Name = category.Name.Trim();
+
+            var existing = (await itemRepo.GetCategoriesAsync(category.UserId ?? 0))
+                .FirstOrDefault(c => string.Equals(c.Name, category.Name, StringComparison.OrdinalIgnoreCase));
+            if (existing is not null)
+                return existing.CategoryId;
+
             return await itemRepo.CreateCategoryAsync(category);
         }
 
@@ -136,6 +157,60 @@ namespace Tams.Api.Services.Inventory
         {
             var items = await itemRepo.GetItemsByUserIdAsync(userId);
             return items.Count();
-        }        
+        }
+
+        public async Task<DashboardResponse> GetDashboardAsync(int userId)
+        {
+            var items = (await itemRepo.GetItemsWithLatestValuationAsync(userId)).ToList();
+            var expiring = await warrantyRepo.GetExpiringWarrantiesAsync(userId, 30);
+
+            static DashboardItem ToDto(ItemWithLatestValuation x) => new()
+            {
+                ItemId = x.ItemId,
+                CategoryId = x.CategoryId,
+                BrandId = x.BrandId,
+                Name = x.Name,
+                Model = x.Model,
+                PurchaseDate = x.PurchaseDate,
+                PurchasePrice = x.PurchasePrice,
+                MaybeSellThreshold = x.MaybeSellThreshold,
+                Condition = x.Condition,
+                LatestEstimatedValue = x.LatestEstimatedValue,
+                LatestValuationAt = x.LatestValuationAt,
+            };
+
+            // "Maybe Sell": surface items whose latest estimated value meets or exceeds the user's
+            // sell threshold (i.e. resale is potentially worthwhile). Items priced below the threshold
+            // are not shown.
+            var maybeSell = items
+                .Where(i => i.LatestEstimatedValue.HasValue && i.LatestEstimatedValue.Value >= i.MaybeSellThreshold)
+                .OrderByDescending(i => i.LatestEstimatedValue)
+                .Select(ToDto)
+                .ToList();
+
+            // Oldest items: prefer purchase_date asc; nulls go last.
+            var oldest = items
+                .OrderBy(i => i.PurchaseDate.HasValue ? 0 : 1)
+                .ThenBy(i => i.PurchaseDate ?? DateOnly.MaxValue)
+                .Take(5)
+                .Select(ToDto)
+                .ToList();
+
+            // Total estimated value: sum latest valuation when available, fall back to purchase price.
+            var totalEstimated = items.Sum(i => i.LatestEstimatedValue ?? i.PurchasePrice ?? 0m);
+
+            return new DashboardResponse
+            {
+                Summary = new DashboardSummary
+                {
+                    TotalItems = items.Count,
+                    TotalEstimatedValue = totalEstimated,
+                    MaybeSellCount = maybeSell.Count,
+                    ExpiringWarrantyCount = expiring.Count(),
+                },
+                OldestItems = oldest,
+                MaybeSellItems = maybeSell,
+            };
+        }
     }
 }

@@ -10,6 +10,7 @@ using Tams.Api.Repos;
 using Tams.Api.Services.Auth;
 using Tams.Api.Services.Pricing;
 using Tams.Api.Services.Inventory;
+using Tams.Api.Services.Users;
 using Tams.Api.Services.Warranty;
 
 SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
@@ -45,6 +46,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPricingService, PricingService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
 builder.Services.AddScoped<IWarrantyService, WarrantyService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 // ==========================================
