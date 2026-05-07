@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useInventory } from '../hooks/useInventory';
 import { useCategories } from '../hooks/useCategories';
 import { useBrands } from '../hooks/useBrands';
+import { useUserSettings } from '../hooks/useUserSettings';
 import ItemTable from '../components/inventory/ItemTable';
 import CategoryFilter from '../components/inventory/CategoryFilter';
 import ItemFormModal from '../components/inventory/ItemFormModal';
@@ -10,6 +11,7 @@ export default function InventoryPage() {
   const { items, loading, error, createItem } = useInventory();
   const { categories, createCategory } = useCategories();
   const { brands, createBrand } = useBrands();
+  const { profile } = useUserSettings();
 
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [sort, setSort] = useState({ key: 'name', dir: 'asc' });
@@ -92,6 +94,7 @@ export default function InventoryPage() {
           mode="add"
           categories={categories}
           brands={brands}
+          defaultSellThreshold={profile?.defaultSellThreshold}
           onCreateCategory={createCategory}
           onCreateBrand={createBrand}
           onSubmit={async (payload) => {

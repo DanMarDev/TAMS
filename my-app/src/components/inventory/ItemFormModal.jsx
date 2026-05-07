@@ -3,7 +3,7 @@ import { useNotification } from '../../context/NotificationContext';
 
 const CONDITIONS = ['New', 'Like New', 'Good', 'Fair', 'Poor'];
 const CREATE_NEW = '__create_new__';
-const DEFAULT_SELL_THRESHOLD = 50.0;
+const FALLBACK_SELL_THRESHOLD = 50.0;
 
 const buildInitial = (item) => ({
   name: item?.name ?? '',
@@ -24,11 +24,14 @@ export default function ItemFormModal({
   initial,
   categories,
   brands,
+  defaultSellThreshold,
   onCreateCategory,
   onCreateBrand,
   onSubmit,
   onClose,
 }) {
+  const effectiveDefault =
+    defaultSellThreshold != null ? Number(defaultSellThreshold) : FALLBACK_SELL_THRESHOLD;
   const { notify } = useNotification();
   const [form, setForm] = useState(() => buildInitial(initial));
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -74,7 +77,7 @@ export default function ItemFormModal({
         purchasePrice: form.purchasePrice === '' ? null : Number(form.purchasePrice),
         maybeSellThreshold:
           form.maybeSellThreshold === ''
-            ? DEFAULT_SELL_THRESHOLD
+            ? effectiveDefault
             : Number(form.maybeSellThreshold),
         originalValue: form.originalValue === '' ? null : Number(form.originalValue),
         condition: form.condition || 'Good',
@@ -241,7 +244,7 @@ export default function ItemFormModal({
 
           <div>
             <label className="block text-sm font-medium mb-1">
-              Sell Threshold (default $50.00)
+              Sell Threshold (default ${effectiveDefault.toFixed(2)})
             </label>
             <input
               type="number"
