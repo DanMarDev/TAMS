@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { inventoryApi } from '../api/inventoryApi';
 import { useCategories } from '../hooks/useCategories';
 import { useBrands } from '../hooks/useBrands';
+import { useUserSettings } from '../hooks/useUserSettings';
 import { useNotification } from '../context/NotificationContext';
 import ItemInfo from '../components/inventory/ItemInfo';
 import ItemFormModal from '../components/inventory/ItemFormModal';
@@ -16,6 +17,7 @@ export default function ItemDetailPage() {
   const { notify } = useNotification();
   const { categories, createCategory } = useCategories();
   const { brands, createBrand } = useBrands();
+  const { profile } = useUserSettings();
 
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -108,6 +110,7 @@ export default function ItemDetailPage() {
           initial={item}
           categories={categories}
           brands={brands}
+          defaultSellThreshold={profile?.defaultSellThreshold}
           onCreateCategory={createCategory}
           onCreateBrand={createBrand}
           onSubmit={handleUpdate}
