@@ -20,7 +20,7 @@ namespace Tams.Api.Services.Auth
 
             if (existingUser is not null)
             {
-                throw new Exception("An account with this email already exists.");
+                throw new InvalidOperationException("An account with this email already exists.");
             }
 
             var user = new User
@@ -47,7 +47,7 @@ namespace Tams.Api.Services.Auth
 
             if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             {
-                throw new Exception("Invalid email or password.");
+                throw new UnauthorizedAccessException("Invalid email or password.");
             }
 
             return new AuthResponse
@@ -90,20 +90,26 @@ namespace Tams.Api.Services.Auth
             var resetToken = await tokenRepo.GetByTokenHashAsync(hashedToken);
             if (resetToken is null || resetToken.UsedAt != null || resetToken.ExpiresAt < DateTime.UtcNow)
             {
-                throw new Exception("Invalid or expired password reset token.");
+                throw new InvalidOperationException("Invalid or expired password reset token.");
             }
 
             // Update user's password
             var user = await userRepo.GetUserByIdAsync(resetToken.UserId);
             if (user is null)
             {
-                throw new Exception("User not found.");
+                throw new KeyNotFoundException("User not found.");
             }
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
             await userRepo.UpdateUserAsync(user);
 
             // Mark the token as used
             await tokenRepo.MarkUsedAsync(resetToken.ResetTokenId);
+        }
+
+        public async Task LogoutAsync(int userId)
+        {
+            // For JWT-based auth, logout can be handled on the client side by simply deleting the token.
+            await Task.CompletedTask;
         }
 
         // =========================

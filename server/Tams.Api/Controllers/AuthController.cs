@@ -10,7 +10,7 @@ namespace Tams.Api.Controllers;
 /// <param name="authService">The authentication service used to handle registration, login, forgot password, and reset password operations.</param>
 [ApiController]
 [Route("api/auth")]
-public sealed class AuthController(IAuthService authService) : ControllerBase
+public sealed class AuthController(IAuthService authService) : AppControllerBase
 {
 
     /// <summary>
@@ -25,11 +25,11 @@ public sealed class AuthController(IAuthService authService) : ControllerBase
         try
         {
             var response = await authService.RegisterAsync(request);
-            return Ok(response);
+            return StatusCode(StatusCodes.Status201Created, response);
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -47,14 +47,14 @@ public sealed class AuthController(IAuthService authService) : ControllerBase
             var response = await authService.LoginAsync(request);
             return Ok(response);
         }
-        catch (UnauthorizedAccessException ex)
+        catch (Exception ex)
         {
-            return Unauthorized(ex.Message);
+            return HandleException(ex);
         }
     }
 
     /// <summary>
-    /// Initiates the forgot password process for a user with the provided email. If the email exists, a password reset token is generated and stored, and an email with reset instructions is sent to the user. 
+    /// Initiates the forgot password process for a user with the provided email. If the email exists, a password reset token is generated and stored, and an email with reset instructions is sent to the user.
     /// Returns a string representing the password reset token for testing purposes. If the email does not exist, returns a BadRequest with the error message.
     /// </summary>
     /// <param name="request">The forgot password request containing the user's email.</param>
@@ -70,7 +70,7 @@ public sealed class AuthController(IAuthService authService) : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -86,11 +86,26 @@ public sealed class AuthController(IAuthService authService) : ControllerBase
         try
         {
             await authService.ResetPasswordAsync(request);
-            return Ok(new { Message = "Password reset successful." });
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
+        }
+    }
+
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        try
+        {
+            await authService.LogoutAsync(GetUserIdFromClaims());
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return HandleException(ex);
         }
     }
 }

@@ -2,15 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Tams.Api.Services.Inventory;
 using Tams.Api.Models;
-using System.Security.Claims;
 
 namespace Tams.Api.Controllers;
 
 
 
 /// <summary>
-/// Controller for handling inventory-related endpoints such as managing items, brands, categories, and inventory analytics. 
-/// This controller uses the IInventoryService to perform the necessary operations for each endpoint. All endpoints should be 
+/// Controller for handling inventory-related endpoints such as managing items, brands, categories, and inventory analytics.
+/// This controller uses the IInventoryService to perform the necessary operations for each endpoint. All endpoints should be
 /// secured and only accessible to authenticated users.
 /// </summary>
 /// <param name="inventoryService"></param>
@@ -31,7 +30,7 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -41,11 +40,12 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
         try
         {
             var item = await inventoryService.GetItemByIdAsync(itemId, GetUserIdFromClaims());
+            if (item is null) return NotFound("Item not found.");
             return Ok(item);
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -70,11 +70,11 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
             };
 
             var itemId = await inventoryService.CreateItemAsync(newItem);
-            return Ok(new { ItemId = itemId });
+            return CreatedAtAction(nameof(GetItem), new { itemId }, new { ItemId = itemId });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -98,12 +98,13 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
                 Condition = request.Condition,
                 Notes = request.Notes
             };
-            await inventoryService.UpdateItemAsync(updatedItem, GetUserIdFromClaims());
-            return Ok();
+            var ok = await inventoryService.UpdateItemAsync(updatedItem, GetUserIdFromClaims());
+            if (!ok) return NotFound("Item not found.");
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -112,12 +113,13 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
     {
         try
         {
-            await inventoryService.DeleteItemAsync(itemId, GetUserIdFromClaims());
-            return Ok();
+            var ok = await inventoryService.DeleteItemAsync(itemId, GetUserIdFromClaims());
+            if (!ok) return NotFound("Item not found.");
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -133,7 +135,7 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -143,11 +145,12 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
         try
         {
             var category = await inventoryService.GetCategoryByIdAsync(id, GetUserIdFromClaims());
+            if (category is null) return NotFound("Category not found.");
             return Ok(category);
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -164,11 +167,11 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
             };
 
             var categoryId = await inventoryService.CreateCategoryAsync(newCategory);
-            return Ok(new { CategoryId = categoryId });
+            return CreatedAtAction(nameof(GetCategory), new { id = categoryId }, new { CategoryId = categoryId });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -184,12 +187,13 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
                 Name = request.Name,
                 Description = request.Description
             };
-            await inventoryService.UpdateCategoryAsync(updatedCategory, GetUserIdFromClaims());
-            return Ok();
+            var ok = await inventoryService.UpdateCategoryAsync(updatedCategory, GetUserIdFromClaims());
+            if (!ok) return NotFound("Category not found.");
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -198,12 +202,13 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
     {
         try
         {
-            await inventoryService.DeleteCategoryAsync(id, GetUserIdFromClaims());
-            return Ok();
+            var ok = await inventoryService.DeleteCategoryAsync(id, GetUserIdFromClaims());
+            if (!ok) return NotFound("Category not found.");
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -219,7 +224,7 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -229,11 +234,12 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
         try
         {
             var brand = await inventoryService.GetBrandByIdAsync(id, GetUserIdFromClaims());
+            if (brand is null) return NotFound("Brand not found.");
             return Ok(brand);
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -248,11 +254,11 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
                 Name = request.Name
             };
             var brandId = await inventoryService.CreateBrandAsync(newBrand);
-            return Ok(new { BrandId = brandId });
+            return CreatedAtAction(nameof(GetBrand), new { id = brandId }, new { BrandId = brandId });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -267,12 +273,13 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
                 UserId = GetUserIdFromClaims(),
                 Name = request.Name
             };
-            await inventoryService.UpdateBrandAsync(updatedBrand, GetUserIdFromClaims());
-            return Ok();
+            var ok = await inventoryService.UpdateBrandAsync(updatedBrand, GetUserIdFromClaims());
+            if (!ok) return NotFound("Brand not found.");
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 
@@ -281,12 +288,13 @@ public sealed class InventoryController(IInventoryService inventoryService) : Ap
     {
         try
         {
-            await inventoryService.DeleteBrandAsync(id, GetUserIdFromClaims());
-            return Ok();
+            var ok = await inventoryService.DeleteBrandAsync(id, GetUserIdFromClaims());
+            if (!ok) return NotFound("Brand not found.");
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return HandleException(ex);
         }
     }
 }

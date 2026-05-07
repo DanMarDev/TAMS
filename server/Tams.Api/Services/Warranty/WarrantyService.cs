@@ -15,7 +15,7 @@ namespace Tams.Api.Services.Warranty
             var item = await itemRepository.GetItemAsync(itemId, userId);
             if (item == null)
             {
-                throw new Exception("Item not found for the given user.");
+                throw new KeyNotFoundException("Item not found for the given user.");
             }
             return await warrantyRepository.GetWarrantyByItemIdAsync(itemId);
         }
@@ -29,7 +29,7 @@ namespace Tams.Api.Services.Warranty
         {
             var item = await itemRepository.GetItemAsync(request.ItemId, userId);
             if (item == null)
-                throw new Exception("Item not found for the given user.");
+                throw new KeyNotFoundException("Item not found for the given user.");
 
             var endDate = request.WarrantyEndDate;
             if (endDate == null && request.WarrantyStartDate != null && request.TermMonths != null)
@@ -69,11 +69,11 @@ namespace Tams.Api.Services.Warranty
             var item = await itemRepository.GetItemAsync(itemId, userId);
             if (item == null)
             {
-                throw new Exception("Item not found for the given user. Cannot delete warranty.");
+                throw new KeyNotFoundException("Item not found for the given user. Cannot delete warranty.");
             }
             var warranty = await warrantyRepository.GetWarrantyByItemIdAsync(itemId);
             if (warranty == null || warranty.ItemWarrantyId != warrantyId)            {
-                throw new Exception("Warranty not found for the given item and user. Cannot delete.");
+                throw new KeyNotFoundException("Warranty not found for the given item and user. Cannot delete.");
             }
             return await warrantyRepository.DeleteWarrantyAsync(warrantyId, userId);
         }
@@ -108,7 +108,7 @@ namespace Tams.Api.Services.Warranty
         {
             if (startDate == default(DateOnly))
             {
-                throw new Exception("Start date is required to compute end date.");
+                throw new ArgumentException("Start date is required to compute end date.");
             }
             var endDate = startDate.AddMonths(termMonths);
             return endDate;

@@ -6,7 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 using Tams.Api.Repos;
 // Services will be added here as needed
 using Tams.Api.Services.Auth;
+using Tams.Api.Services.Pricing;
 using Tams.Api.Services.Inventory;
+using Tams.Api.Services.Warranty;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,9 +37,9 @@ builder.Services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepo
 // Services - Uncomment services as they are implemented
 // ==========================================
 builder.Services.AddScoped<IAuthService, AuthService>();
-// builder.Services.AddScoped<IPricingService, PricingService>();
+builder.Services.AddScoped<IPricingService, PricingService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
-// builder.Services.AddScoped<IWarrantyService, WarrantyService>();
+builder.Services.AddScoped<IWarrantyService, WarrantyService>();
 
 
 // ==========================================
@@ -80,11 +82,17 @@ builder.Services.AddCors(options =>
 
 // ==========================================
 // HTTP Client
-// For external API calls (e.g., pricing services), we can register HttpClient here.
 // ==========================================
 builder.Services.AddHttpClient();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddHttpLogging(options =>
+{
+   options.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestMethod | 
+                           Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestPath | 
+                           Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.ResponseStatusCode |
+                            Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.Duration; 
+});
 
 // ==========================================
 var app = builder.Build();
@@ -119,6 +127,7 @@ app.UseHttpsRedirection();
 app.UseCors("ReactSpa");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpLogging();
 app.MapControllers();
 
 app.Run();

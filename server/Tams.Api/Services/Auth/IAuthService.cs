@@ -42,6 +42,6 @@ namespace Tams.Api.Services.Auth
         Task ResetPasswordAsync(ResetPasswordRequest request);
 
         // TODO: Implement LogoutAsync to invalidate JWT tokens or remove refresh tokens as needed for user logout functionality.
-        // Task LogoutAsync(int userId);
+        Task LogoutAsync(int userId);
     }
 }
