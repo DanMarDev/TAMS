@@ -7,8 +7,8 @@ namespace Tams.Api.Services.Warranty
         // ====== Warranty CRUD ======
         Task<ItemWarranty?> GetWarrantyByItemIdAsync(int itemId, int userId);
         Task<IEnumerable<ItemWarranty>> GetWarrantiesByUserIdAsync(int userId);
-        Task<int> SaveWarrantyAsync(ItemWarranty warranty);
-        Task<bool> DeleteWarrantyAsync(int warrantyId, int userId);
+        Task<int> SaveWarrantyAsync(WarrantyRequest request, int? warrantyId, int userId);
+        Task<bool> DeleteWarrantyAsync(int warrantyId, int userId, int itemId);
 
         // ====== Warranty Status ======
 
@@ -34,6 +34,7 @@ namespace Tams.Api.Services.Warranty
         Task<IEnumerable<ItemWarranty>> GetExpiringWarrantiesAsync(int userId);
 
         // ====== Warranty Alerts ======
+        Task<bool> CreateAlertAsync(WarrantyAlert alert);
         Task<IEnumerable<WarrantyAlert>> GetActiveAlertsAsync(int userId);
         Task<bool> DismissAlertAsync(int alertId, int userId);
     }

@@ -6,6 +6,7 @@ namespace Tams.Api.Repos
     {
         Task<Item?> GetItemByIdAsync(int itemId);
         Task<IEnumerable<Item>> GetItemsByUserIdAsync(int userId);
+        Task<Item?> GetItemAsync(int itemId, int userId);
         Task<int> CreateItemAsync(Item item);
         Task<bool> UpdateItemAsync(Item item);
         Task<bool> DeleteItemAsync(int itemId);

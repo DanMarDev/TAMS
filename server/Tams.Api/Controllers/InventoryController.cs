@@ -17,7 +17,7 @@ namespace Tams.Api.Controllers;
 [ApiController]
 [Route("api/inventory")]
 [Authorize]
-public sealed class InventoryController(IInventoryService inventoryService) : ControllerBase
+public sealed class InventoryController(IInventoryService inventoryService) : AppControllerBase
 {
     // ====== Item CRUD ======
 
@@ -288,11 +288,5 @@ public sealed class InventoryController(IInventoryService inventoryService) : Co
         {
             return BadRequest(ex.Message);
         }
-    }
-
-    // Private helpers
-    private int GetUserIdFromClaims()
-    {
-        return int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     }
 }

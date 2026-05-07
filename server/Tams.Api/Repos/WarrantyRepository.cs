@@ -1,6 +1,7 @@
 using Tams.Api.Models;
 using Dapper;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Tams.Api.Repos
 {
@@ -133,6 +134,16 @@ namespace Tams.Api.Repos
                 WHERE iw.item_warranty_id = @WarrantyId AND i.user_id = @UserId
                 """;
             int rowsAffected = await db.ExecuteAsync(sql, new { WarrantyId = warrantyId, UserId = userId });
+            return rowsAffected > 0;
+        }
+
+        public async Task<bool> CreateAlertAsync(WarrantyAlert alert)
+        {
+            const string sql = """
+                INSERT INTO WarrantyAlerts (user_id, item_id, alert_type, created_at)
+                VALUES (@UserId, @ItemId, @AlertType, GETDATE())
+                """;
+            int rowsAffected = await db.ExecuteAsync(sql, alert);
             return rowsAffected > 0;
         }
     }

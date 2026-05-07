@@ -9,6 +9,7 @@ namespace Tams.Api.Repos
         Task<IEnumerable<ItemWarranty>> GetExpiringWarrantiesAsync(int userId, int daysAhead);
         Task<int> UpsertWarrantyAsync(ItemWarranty warranty);
         Task<bool> DeleteWarrantyAsync(int warrantyId, int userId);
+        Task<bool> CreateAlertAsync(WarrantyAlert alert);
         Task<IEnumerable<WarrantyAlert>> GetAlertsByUserIdAsync(int userId);
         Task<bool> DismissAlertAsync(int alertId, int userId);
         Task<WarrantyPolicy?> GetPolicyByBrandAndCategoryAsync(int brandId, int categoryId);

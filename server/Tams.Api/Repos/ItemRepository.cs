@@ -52,6 +52,29 @@ namespace Tams.Api.Repos
             return await db.QueryAsync<Item>(sql, new { UserId = userId });
         }
 
+        public async Task<Item?> GetItemAsync(int itemId, int userId)
+        {
+            const string sql = """
+                SELECT item_id                AS ItemId,
+                       user_id                AS UserId,
+                       category_id            AS CategoryId,
+                       brand_id               AS BrandId,
+                       name                   AS Name,
+                       model                  AS Model,
+                       purchase_date          AS PurchaseDate,
+                       purchase_price         AS PurchasePrice,
+                       maybe_sell_threshold   AS MaybeSellThreshold,
+                       original_value         AS OriginalValue,
+                       condition              AS Condition,
+                       notes                  AS Notes,
+                       created_at             AS CreatedAt,
+                       updated_at             AS UpdatedAt
+                FROM Items
+                WHERE item_id = @ItemId AND user_id = @UserId
+                """;
+            return await db.QueryFirstOrDefaultAsync<Item>(sql, new { ItemId = itemId, UserId = userId });
+        }
+
         public async Task<int> CreateItemAsync(Item item)
         {
             const string sql = """
