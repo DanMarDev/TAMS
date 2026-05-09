@@ -8,12 +8,17 @@ GO
 -- Users
 -- =============================================================
 CREATE TABLE Users (
-    user_id         INT IDENTITY PRIMARY KEY,
-    email           VARCHAR(255) NOT NULL UNIQUE,
-    password_hash   VARCHAR(255) NOT NULL,
-    user_name       VARCHAR(255) NOT NULL,
-    created_at      DATETIME     NOT NULL DEFAULT GETDATE()
+    user_id                 INT IDENTITY PRIMARY KEY,
+    email                   VARCHAR(255) NOT NULL UNIQUE,
+    password_hash           VARCHAR(255) NOT NULL,
+    user_name               VARCHAR(255) NOT NULL,
+    default_sell_threshold  DECIMAL(10, 2) NOT NULL DEFAULT 50.00,
+    created_at              DATETIME     NOT NULL DEFAULT GETDATE()
 );
+
+-- For existing databases:
+-- ALTER TABLE Users ADD default_sell_threshold DECIMAL(10, 2) NOT NULL
+--   CONSTRAINT DF_Users_DefaultSellThreshold DEFAULT 50.00;
 
 CREATE TABLE PasswordResetTokens (
     reset_token_id  INT IDENTITY PRIMARY KEY,

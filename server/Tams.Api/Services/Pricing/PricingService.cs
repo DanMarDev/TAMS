@@ -21,7 +21,7 @@ internal class PricingService(
         {
             ItemId = itemId,
             EstimatedValue = randomEstimatedValue, // Dummy value
-            Source = ValuationSources.Ebay,
+            Source = ValuationSources.Manual,
             RetrievedAt = DateTime.UtcNow
         };
         var insertedValuationId = await pricingRepository.InsertValuationAsync(valuation);
